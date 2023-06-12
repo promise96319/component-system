@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DocModule } from './doc/doc.module';
+import { PrismaModule } from 'nestjs-prisma';
 
 @Module({
   imports: [
@@ -14,7 +16,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true,
       autoLoadEntities: true,
     }),
+    PrismaModule.forRoot({ isGlobal: true }),
     UserModule,
+    DocModule,
   ],
   controllers: [AppController],
   providers: [AppService],
