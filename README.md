@@ -16,3 +16,7 @@ pnpm run dev
 # 生成目录
 nest generate resource
 ```
+
+## 资料
+
+- [nestjs + swagger](https://docs.nestjs.com/openapi/introduction)

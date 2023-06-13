@@ -1,48 +1,31 @@
-import { Column, CreateDateColumn, Entity, ObjectIdColumn } from 'typeorm';
-import { ObjectId } from 'mongodb';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Role, User } from '@prisma/client';
 
-export enum Role {
-  ADMIN = 'admin',
-  DEVELOPMENT = 'development',
-  GUEST = 'guest',
-}
+export class UserEntity implements User {
+  @ApiProperty()
+  id: string;
 
-@Entity()
-export class User {
-  @ObjectIdColumn()
-  _id: ObjectId;
-
-  @ObjectIdColumn()
-  id: ObjectId | string;
-
-  @Column()
+  @ApiProperty()
   name: string;
 
-  @Column()
-  nickname: string;
+  @ApiPropertyOptional()
+  nickname: string | null;
 
-  @Column()
+  @ApiProperty()
   email: string;
 
-  @Column()
+  @ApiProperty()
   pwd: string;
 
-  @Column()
-  avatar: string;
+  @ApiPropertyOptional()
+  avatar: string | null;
 
-  @CreateDateColumn({ name: 'createdAt' })
+  @ApiPropertyOptional()
   createdAt: Date;
 
-  @CreateDateColumn({ name: 'updatedAt' })
-  updatedAt: Date;
+  @ApiPropertyOptional()
+  updatedAt: Date | null;
 
-  @Column('boolean', { default: false })
-  isDeleted: boolean;
-
-  @Column({
-    type: 'enum',
-    enum: Role,
-    default: Role.GUEST,
-  })
-  role: Role = Role.GUEST;
+  @ApiPropertyOptional({ type: 'enum', enum: Role, default: Role.GUEST })
+  role: Role;
 }

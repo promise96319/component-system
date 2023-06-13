@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "generate-db": "prisma generate && prisma db push",
+    "generate-api": "ts-node ./scripts/generate-api.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "dev": "nest start --watch",
@@ -24,6 +26,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.3.0",
     "@nestjs/typeorm": "^9.0.1",
     "@prisma/client": "^4.15.0",
     "mongodb": "^5.6.0",

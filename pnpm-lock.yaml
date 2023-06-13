@@ -16,6 +16,9 @@ dependencies:
   '@nestjs/platform-express':
     specifier: ^9.0.0
     version: registry.npmmirror.com/@nestjs/platform-express@9.0.0(@nestjs/common@9.0.0)(@nestjs/core@9.0.0)
+  '@nestjs/swagger':
+    specifier: ^6.3.0
+    version: registry.npmmirror.com/@nestjs/swagger@6.3.0(@nestjs/common@9.0.0)(@nestjs/core@9.0.0)(reflect-metadata@0.1.13)
   '@nestjs/typeorm':
     specifier: ^9.0.1
     version: registry.npmmirror.com/@nestjs/typeorm@9.0.1(@nestjs/common@9.0.0)(@nestjs/core@9.0.0)(reflect-metadata@0.1.13)(rxjs@7.2.0)(typeorm@0.3.16)
@@ -1177,6 +1180,36 @@ packages:
       - chokidar
     dev: true
 
+  registry.npmmirror.com/@nestjs/swagger@6.3.0(@nestjs/common@9.0.0)(@nestjs/core@9.0.0)(reflect-metadata@0.1.13):
+    resolution: {integrity: sha512-Gnig189oa1tD+h0BYIfUwhp/wvvmTn6iO3csR2E4rQrDTgCxSxZDlNdfZo3AC+Rmf8u0KX4ZAX1RZN1qXTtC7A==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/@nestjs/swagger/-/swagger-6.3.0.tgz}
+    id: registry.npmmirror.com/@nestjs/swagger/6.3.0
+    name: '@nestjs/swagger'
+    version: 6.3.0
+    peerDependencies:
+      '@fastify/static': ^6.0.0
+      '@nestjs/common': ^9.0.0
+      '@nestjs/core': ^9.0.0
+      class-transformer: '*'
+      class-validator: '*'
+      reflect-metadata: ^0.1.12
+    peerDependenciesMeta:
+      '@fastify/static':
+        optional: true
+      class-transformer:
+        optional: true
+      class-validator:
+        optional: true
+    dependencies:
+      '@nestjs/common': registry.npmmirror.com/@nestjs/common@9.0.0(reflect-metadata@0.1.13)(rxjs@7.2.0)
+      '@nestjs/core': registry.npmmirror.com/@nestjs/core@9.0.0(@nestjs/common@9.0.0)(@nestjs/platform-express@9.0.0)(reflect-metadata@0.1.13)(rxjs@7.2.0)
+      '@nestjs/mapped-types': registry.npmmirror.com/@nestjs/mapped-types@1.2.2(@nestjs/common@9.0.0)(reflect-metadata@0.1.13)
+      js-yaml: registry.npmmirror.com/js-yaml@4.1.0
+      lodash: registry.npmmirror.com/lodash@4.17.21
+      path-to-regexp: registry.npmmirror.com/path-to-regexp@3.2.0
+      reflect-metadata: registry.npmmirror.com/reflect-metadata@0.1.13
+      swagger-ui-dist: registry.npmmirror.com/swagger-ui-dist@4.18.2
+    dev: false
+
   registry.npmmirror.com/@nestjs/testing@9.0.0(@nestjs/common@9.0.0)(@nestjs/core@9.0.0)(@nestjs/platform-express@9.0.0):
     resolution: {integrity: sha512-lBBzZvJWaYutYC1wOEKf4KOis/wxudBX0pVLZxzHmtbkeC2EQgQCbyKA88m1R9QeYTt9CmVMg4eyb+WeOADZiQ==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/@nestjs/testing/-/testing-9.0.0.tgz}
     id: registry.npmmirror.com/@nestjs/testing/9.0.0
@@ -2240,7 +2273,6 @@ packages:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/argparse/-/argparse-2.0.1.tgz}
     name: argparse
     version: 2.0.1
-    dev: true
 
   registry.npmmirror.com/array-flatten@1.1.1:
     resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/array-flatten/-/array-flatten-1.1.1.tgz}
@@ -4603,7 +4635,6 @@ packages:
     hasBin: true
     dependencies:
       argparse: registry.npmmirror.com/argparse@2.0.1
-    dev: true
 
   registry.npmmirror.com/jsesc@2.5.2:
     resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/jsesc/-/jsesc-2.5.2.tgz}
@@ -4737,7 +4768,6 @@ packages:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/lodash/-/lodash-4.17.21.tgz}
     name: lodash
     version: 4.17.21
-    dev: true
 
   registry.npmmirror.com/log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/log-symbols/-/log-symbols-4.1.0.tgz}
@@ -6147,6 +6177,12 @@ packages:
     version: 1.0.0
     engines: {node: '>= 0.4'}
     dev: true
+
+  registry.npmmirror.com/swagger-ui-dist@4.18.2:
+    resolution: {integrity: sha512-oVBoBl9Dg+VJw8uRWDxlyUyHoNEDC0c1ysT6+Boy6CTgr2rUcLcfPon4RvxgS2/taNW6O0+US+Z/dlAsWFjOAQ==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/swagger-ui-dist/-/swagger-ui-dist-4.18.2.tgz}
+    name: swagger-ui-dist
+    version: 4.18.2
+    dev: false
 
   registry.npmmirror.com/symbol-observable@4.0.0:
     resolution: {integrity: sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==, registry: http://ued.qingteng.cn:81/, tarball: https://registry.npmmirror.com/symbol-observable/-/symbol-observable-4.0.0.tgz}

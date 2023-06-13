@@ -1,43 +1,36 @@
 import { Injectable, Param } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ObjectId } from 'mongodb';
+import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto) {
-    await this.usersRepository.save({
-      name: '王二233',
-    });
-    return this.usersRepository.find();
-  }
-
-  async findAll() {
-    return this.usersRepository.find();
-  }
-
-  async findOne(id: string) {
-    console.log('id', id, new ObjectId(id));
-    const res = await this.usersRepository.findOne({
-      where: {
-        // _id: new ObjectId(id),
-        id: new ObjectId(id),
-        // id,
+  create(createUserDto: CreateUserDto) {
+    return this.prisma.user.create({
+      data: {
+        email: 'hello@email.com' + Math.random(),
+        name: '小王',
+        pwd: '123456',
       },
     });
-    console.log('res', res);
-    return res ? res : '没有找到该用户';
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  findAll() {
+    return this.prisma.user.findMany();
+  }
+
+  findOne(id: string) {
+    return this.prisma.user.findUnique({
+      where: { id },
+    });
+  }
+
+  update(id: string, updateUserDto: UpdateUserDto) {
+    return this.prisma.user.update({
+      data: updateUserDto,
+      where: { id },
+    });
   }
 }
