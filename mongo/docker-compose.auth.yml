@@ -9,10 +9,11 @@ services:
       - ./.env
     volumes:
       - ${MONGO_DB_PATH}:/data/db
+      - ./replica.key:/data/replica.key
     ports:
       - ${MONGO_PORT}:27017
     restart: always
-    command: mongod --bind_ip_all --replSet rs0
+    command: bash -c "chmod 400 /data/replica.key && mongod --bind_ip_all --replSet rs0 --keyFile /data/replica.key"
 
   mongo-init:
     depends_on:
@@ -20,8 +21,8 @@ services:
     restart: on-failure
     image: mongo:latest
     container_name: mongo-init
-    entrypoint: ['bash', '/scripts/init.sh']
+    entrypoint: ['bash', '/scripts/init-rs.sh']
     env_file:
       - ./.env
     volumes:
-      - ./init-rs.sh:/scripts/init.sh
+      - ./init.sh:/scripts/init-rs.sh

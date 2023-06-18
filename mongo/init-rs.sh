@@ -1,16 +1,21 @@
 #!/bin/bash
 
-set -e
-set -u
-# set -x	# Uncoinimment for debugging
+sleep 5
 
-mongosh --quiet \
---host mongo \
--u $MONGO_ROOT_USER -p $MONGO_ROOT_PWD \
---authenticationDatabase admin \
+mongosh --quiet --host $MONGO_HOST \
 <<-EOF
-	rs.initiate();
+  rs.initiate();
+	rs.status();
 EOF
 
-
-exec "$@"
+mongosh --quiet --host $MONGO_HOST \
+<<-EOF
+	use admin;
+	db.createUser(
+		{
+			user: "$MONGO_ROOT_USER",
+			pwd: "$MONGO_ROOT_PWD",
+			roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+		});
+	db.auth("$MONGO_ROOT_USER", "$MONGO_ROOT_PWD");
+EOF
