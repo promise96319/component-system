@@ -5,6 +5,9 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node ./prisma/seed.ts"
+  },
   "scripts": {
     "generate-db": "prisma generate && prisma db push",
     "generate-api": "ts-node ./scripts/generate-api.ts",

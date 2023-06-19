@@ -7,6 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ================== 用户 ==================
+
 enum Role {
   ADMIN
   DEVELOPER
@@ -14,33 +16,266 @@ enum Role {
 }
 
 model User {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  nickname     String?
-  email        String         @unique
-  pwd          String
-  avatar       String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime?      @updatedAt
-  role         Role           @default(GUEST)
-  MajorVersion MajorVersion[]
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  nickname  String?
+  email     String    @unique
+  pwd       String
+  avatar    String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  role      Role      @default(GUEST)
+
+  MajorVersion     MajorVersion?
+  APIChangelog     APIChangelog[]
+  Demand           Demand[]
+  Discussion       Discussion[]
+  VersionChangelog VersionChangelog[]
+  DemandComment    DemandComment[]
+  DesignChangelog  DesignChangelog[]
 
   @@map("user")
 }
 
+// ================== 版本 ==================
 type Version {
   version     String
-  publishedBy String @db.ObjectId
-  createdById String
+  publishedBy String   @db.ObjectId
+  publishedAt DateTime @default(now())
 }
 
 model MajorVersion {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   majorVersion Int
-  createdBy    User      @relation(fields: [createdById], references: [id])
+  CreatedBy    User      @relation(fields: [createdById], references: [id])
   createdById  String    @unique @db.ObjectId
   createdAt    DateTime  @default(now())
-  versions     Version[]
+  versions     Version[] @unique(map: "version")
+
+  Component        Component[]
+  APIDoc           APIDoc[]
+  Demand           Demand[]
+  Discussion       Discussion[]
+  VersionChangelog VersionChangelog[]
+  DesignDoc        DesignDoc[]
 
   @@map("major_version")
+}
+
+// ================== 组件 ==================
+
+type ComponentDetail {
+  componentId String
+  description String
+}
+
+model Component {
+  id             String            @id @default(auto()) @map("_id") @db.ObjectId
+  category       String
+  components     ComponentDetail[] @unique(map: "componentId")
+  MajorVersion   MajorVersion      @relation(fields: [majorVersionId], references: [id])
+  majorVersionId String            @db.ObjectId
+
+  @@map("component")
+}
+
+// ================== API 文档 ==================
+
+type APIDocPendingUpdate {
+  contentId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+}
+
+model APIDoc {
+  id             String               @id @default(auto()) @map("_id") @db.ObjectId
+  componentId    String
+  MajorVersion   MajorVersion         @relation(fields: [majorVersionId], references: [id])
+  majorVersionId String               @db.ObjectId
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime?            @updatedAt
+  contentId      String
+  pendingUpdate  APIDocPendingUpdate?
+
+  APIContent   APIContent?
+  APIChangelog APIChangelog[]
+
+  @@map("api_doc")
+}
+
+model APIContent {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  content         String
+  compiledContent String
+  APIDoc          APIDoc @relation(fields: [docId], references: [id])
+  docId           String @unique @db.ObjectId
+
+  @@map("api_content")
+}
+
+model APIChangelog {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  APIDoc      APIDoc   @relation(fields: [docId], references: [id])
+  docId       String   @db.ObjectId
+  content     String
+  createdAt   DateTime @default(now())
+  CreatedBy   User     @relation(fields: [createdById], references: [id])
+  createdById String   @db.ObjectId
+  Demand      Demand?  @relation(fields: [demandId], references: [id])
+  demandId    String?  @db.ObjectId
+
+  @@map("api_changelog")
+}
+
+// ================== 设计规范文档 ==================
+
+type DesignDocPendingUpdate {
+  contentId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+}
+
+model DesignDoc {
+  id             String                  @id @default(auto()) @map("_id") @db.ObjectId
+  componentId    String
+  MajorVersion   MajorVersion            @relation(fields: [majorVersionId], references: [id])
+  majorVersionId String                  @db.ObjectId
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime?               @updatedAt
+  contentId      String
+  pendingUpdate  DesignDocPendingUpdate?
+
+  DesignContent   DesignContent?
+  DesignChangelog DesignChangelog[]
+
+  @@map("design_doc")
+}
+
+model DesignContent {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  content         String
+  compiledContent String
+  DesignDoc       DesignDoc @relation(fields: [docId], references: [id])
+  docId           String    @unique @db.ObjectId
+
+  @@map("design_content")
+}
+
+model DesignChangelog {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  DesignDoc   DesignDoc @relation(fields: [docId], references: [id])
+  docId       String    @db.ObjectId
+  content     String
+  createdAt   DateTime  @default(now())
+  CreatedBy   User      @relation(fields: [createdById], references: [id])
+  createdById String    @db.ObjectId
+  Demand      Demand?   @relation(fields: [demandId], references: [id])
+  demandId    String?   @db.ObjectId
+
+  @@map("design_changelog")
+}
+
+// ================== 需求 ==================
+
+enum DemandStatus {
+  OPENED
+  CLOSED
+}
+
+model Demand {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  content        String
+  CreatedBy      User         @relation(fields: [createdById], references: [id])
+  createdById    String       @db.ObjectId
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?    @updatedAt
+  status         DemandStatus @default(OPENED)
+  MajorVersion   MajorVersion @relation(fields: [majorVersionId], references: [id])
+  majorVersionId String       @db.ObjectId
+  version        String?
+
+  DemandComment    DemandComment[]
+  VersionChangelog VersionChangelog[]
+  APIChangelog     APIChangelog[]
+  DesignChangelog  DesignChangelog[]
+
+  @@map("demand")
+}
+
+model DemandComment {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
+  createdAt   DateTime  @default(now())
+  CreatedBy   User      @relation(fields: [createdById], references: [id])
+  createdById String    @db.ObjectId
+  updatedAt   DateTime? @updatedAt
+  Demand      Demand?   @relation(fields: [demandId], references: [id])
+  demandId    String?   @db.ObjectId
+
+  commentId       String?        @unique @db.ObjectId
+  CommentTarget   DemandComment? @relation("DemandCommentTarget", fields: [commentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  CommentRelation DemandComment? @relation("DemandCommentTarget")
+
+  @@map("demand_comment")
+}
+
+// ================== 讨论 ==================
+
+model Discussion {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  componentId String
+
+  content           String
+  CreatedBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String              @db.ObjectId
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?           @updatedAt
+  MajorVersion      MajorVersion        @relation(fields: [majorVersionId], references: [id])
+  majorVersionId    String              @db.ObjectId
+  DiscussionComment DiscussionComment[]
+
+  @@map("discussion")
+}
+
+model DiscussionComment {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  content     String
+  createdAt   DateTime  @default(now())
+  createdById String    @db.ObjectId
+  updatedAt   DateTime? @updatedAt
+
+  commentId       String?            @unique @db.ObjectId
+  CommentTarget   DiscussionComment? @relation("DiscussionCommentTarget", fields: [commentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  CommentRelation DiscussionComment? @relation("DiscussionCommentTarget")
+  Discussion      Discussion?        @relation(fields: [discussionId], references: [id])
+  discussionId    String?            @db.ObjectId
+
+  @@map("discussion_comment")
+}
+
+// ================== 版本记录 ==================
+
+enum VersionChangelogType {
+  FEATURE
+  BUGFIX
+  STYLE
+  REFACTOR
+}
+
+model VersionChangelog {
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  compmonentId String
+  type         VersionChangelogType
+  content      String
+  createdAt    DateTime             @default(now())
+  CreatedBy    User                 @relation(fields: [createdById], references: [id])
+  createdById  String               @db.ObjectId
+
+  version        String
+  MajorVersion   MajorVersion @relation(fields: [majorVersionId], references: [id])
+  majorVersionId String       @db.ObjectId
+  Demand         Demand?      @relation(fields: [demandId], references: [id])
+  demandId       String?      @unique @db.ObjectId
+
+  @@map("version_changelog")
 }

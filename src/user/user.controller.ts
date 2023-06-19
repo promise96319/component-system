@@ -10,7 +10,7 @@ import { UserEntity } from './entities/user.entity';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Get('add')
   @ApiBody({ type: CreateUserDto })
   @ApiOkResponse({ type: UserEntity })
   create(@Body() createUserDto: CreateUserDto) {
