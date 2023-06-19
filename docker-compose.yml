@@ -1,10 +1,17 @@
 version: '3'
+
 services:
-  api:
-    image: node:alpine
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: npm run start:prod
+  nestjs-deploy:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 37020:3000
+    networks:
+      - nestjs-network
+    volumes:
+      - .:/usr/src/app
+
+networks:
+  nestjs-network:
+    driver: bridge

@@ -48,7 +48,7 @@ pnpm run generate-api
 
 ### 数据库可视化
 
-下载 `MongoDB Compass` 软件，连接公司内部服务器数据库地址即可。
+下载 `MongoDB Compass` 软件，连接公司内部服务器数据库地址即可，如 mongodb://<用户名>:<密码>@<主机名>:<端口号>/<数据库>?directConnection=true&authSource=admin。
 
 ### 数据库内容初始化
 
@@ -83,6 +83,14 @@ npx prisma db push
     "editor.defaultFormatter": "Prisma.prisma"
   }
 }
+```
+
+## 部署
+
+使用 `docker` 将服务部署到服务器端口 `37020` 上。
+
+```bash
+docker-compose up -d
 ```
 
 ## 资料
