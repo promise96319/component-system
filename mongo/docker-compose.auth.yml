@@ -21,8 +21,8 @@ services:
     restart: on-failure
     image: mongo:latest
     container_name: mongo-init
-    entrypoint: ['bash', '/scripts/init-rs.sh']
+    entrypoint: ['bash', '/scripts/init-user.sh']
     env_file:
       - ./.env
     volumes:
-      - ./init.sh:/scripts/init-rs.sh
+      - ./init-user.sh:/scripts/init-user.sh

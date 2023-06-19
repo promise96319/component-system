@@ -2,19 +2,6 @@
 
 sleep 5
 
-# echo "------------ init rs -----------"
-
-# mongosh \
-# --host $MONGO_HOST \
-# -u $MONGO_ROOT_USER -p $MONGO_ROOT_PWD \
-# --authenticationDatabase admin \
-# <<-EOF
-#   rs.initiate();
-# 	rs.status();
-# EOF
-
-echo "------------ init user -----------"
-
 mongosh \
 --host $MONGO_HOST \
 -u $MONGO_ROOT_USER -p $MONGO_ROOT_PWD \
