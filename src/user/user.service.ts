@@ -9,11 +9,7 @@ export class UserService {
 
   create(createUserDto: CreateUserDto) {
     return this.prisma.user.create({
-      data: {
-        email: 'hello@email.com' + Math.random(),
-        name: '小王',
-        pwd: '123456',
-      },
+      data: createUserDto,
     });
   }
 

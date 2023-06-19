@@ -1,0 +1,10 @@
+version: '3'
+services:
+  api:
+    image: node:alpine
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: npm run start:prod
+    ports:
+      - 37020:3000
