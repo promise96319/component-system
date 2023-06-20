@@ -24,6 +24,30 @@ pnpm run dev
 
 ### 目录
 
+src 目录结构如下：
+
+```js
+.
+├── main.ts // 入口文件
+├── app.module.ts // 入口模块
+├── common  // 公共文件
+│   ├── constant // 常量
+│   ├── decorator // 装饰器
+│   ├── filter // 过滤器
+│   ├── guard // 守卫
+│   ├── interceptor // 拦截器
+│   ├── logger // 日志
+│   └── pipe // 管道
+└── user // 模块
+    ├── dto  // 数据传输对象
+    ├── entities  // 数据库模型
+    ├── user.controller.spec.ts
+    ├── user.controller.ts // 控制器
+    ├── user.module.ts // 模块
+    ├── user.service.spec.ts
+    └── user.service.ts // 服务
+```
+
 ### 接口开发
 
 通过 `nest` 命令生成接口文件模板，详情见 [nest-cli](https://docs.nestjs.com/cli/usages)。
@@ -48,7 +72,7 @@ pnpm run generate-api
 
 ### 数据库可视化
 
-下载 `MongoDB Compass` 软件，连接公司内部服务器数据库地址即可，如 mongodb://<用户名>:<密码>@<主机名>:<端口号>/<数据库>?directConnection=true&authSource=admin。
+下载 `MongoDB Compass` 软件，连接公司内部服务器数据库地址即可，如 `mongodb://<用户名>:<密码>@<主机名>:<端口号>/<数据库>?directConnection=true&authSource=admin`。
 
 ### 数据库内容初始化
 
@@ -66,10 +90,21 @@ npx prisma db seed
 npx prisma generate
 ```
 
-执行完成后会生成相应的 `TS` 类型文件，然后通过以下命令将模型同步到数据库中：
+执行完成后会生成相应的 `TS` 类型文件，在代码中可以直接使用。另外，需要将此处的类型文件同步给客户端。
+
+定外完模型后，通过以下命令将模型同步到数据库中：
 
 ```bash
 npx prisma db push
+```
+
+### 数据库部署
+
+数据库部署文件在 `mongo` 目录下，使用 `docker-compose` 部署：
+
+```bash
+cd mongo
+docker-compose -f docker-comopose.auth.yml up -d
 ```
 
 ### VSCode 插件

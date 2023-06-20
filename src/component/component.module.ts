@@ -4,6 +4,6 @@ import { ComponentController } from './component.controller';
 
 @Module({
   controllers: [ComponentController],
-  providers: [ComponentService]
+  providers: [ComponentService],
 })
 export class ComponentModule {}
