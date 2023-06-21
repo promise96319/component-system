@@ -38,14 +38,15 @@ src 目录结构如下：
 │   ├── interceptor // 拦截器
 │   ├── logger // 日志
 │   └── pipe // 管道
-└── user // 模块
-    ├── dto  // 数据传输对象
-    ├── entities  // 数据库模型
-    ├── user.controller.spec.ts
-    ├── user.controller.ts // 控制器
-    ├── user.module.ts // 模块
-    ├── user.service.spec.ts
-    └── user.service.ts // 服务
+└── module  // 模块目录
+    └── user // 用户模块
+        ├── dto  // 数据传输对象
+        ├── entities  // 数据库模型
+        ├── user.controller.spec.ts
+        ├── user.controller.ts // 控制器
+        ├── user.module.ts // 模块
+        ├── user.service.spec.ts
+        └── user.service.ts // 服务
 ```
 
 ### 接口开发
