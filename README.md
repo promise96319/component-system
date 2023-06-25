@@ -110,7 +110,7 @@ docker-compose -f docker-comopose.auth.yml up -d
 
 ### VSCode 插件
 
-安装 `prisma` 插件，可以格式化 `prisma` 文件。在 `setting.json` 中添加以下配置，可以在文件保存时自动格式化：
+安装 `prisma` 插件，可以格式化 `prisma` 文件。在 `setting.json` 中添加以下配置（已在 `.vscode` 文件中添加），可以在文件保存时自动格式化：
 
 ```json
 {

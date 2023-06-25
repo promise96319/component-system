@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MajorVersionService } from './major-version.service';
 import { CreateMajorVersionDto } from './dto/create-major-version.dto';
 import { UpdateMajorVersionDto } from './dto/update-major-version.dto';
@@ -23,7 +31,10 @@ export class MajorVersionController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMajorVersionDto: UpdateMajorVersionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMajorVersionDto: UpdateMajorVersionDto,
+  ) {
     return this.majorVersionService.update(+id, updateMajorVersionDto);
   }
 

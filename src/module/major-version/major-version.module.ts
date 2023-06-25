@@ -4,6 +4,6 @@ import { MajorVersionController } from './major-version.controller';
 
 @Module({
   controllers: [MajorVersionController],
-  providers: [MajorVersionService]
+  providers: [MajorVersionService],
 })
 export class MajorVersionModule {}
